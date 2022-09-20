@@ -40,12 +40,14 @@
                 position: absolute;
                 top: 22px;
                 right: -30px;
+                color: red;
             }
 
             #ms-icon-user-done {
                 position: absolute;
                 top: 22px;
                 right: -30px;
+                color: rgb(133, 241, 45);
             }
 
             .user-wrap {
@@ -58,12 +60,14 @@
                 position: absolute;
                 top: 22px;
                 right: -30px;
+                color: red;
             }
 
             #ms-icon-done {
                 position: absolute;
                 top: 22px;
                 right: -30px;
+                color: rgb(133, 241, 45);
             }
 
             .pass-wrap {
@@ -91,7 +95,7 @@
                     <span class="material-symbols-outlined" id="ms-icon-user-close">close</span>
                     <span class="material-symbols-outlined" id="ms-icon-user-done">done</span>  
                     <label for="username">Username:</label>
-                    <input id="username" class="usernameInputField" type="text" />
+                    <input id="username" type="text" />
                 </div>
 
                 <div class="pass-wrap">         
@@ -112,6 +116,11 @@
         <script type="text/javascript">
 
             function login() {
+                
+                const iconUserDone = document.getElementById("ms-icon-user-done");
+                const iconUserError = document.getElementById("ms-icon-user-close");
+                const iconPassDone = document.getElementById("ms-icon-done");
+                const iconPassError = document.getElementById("ms-icon-close");
 
                 const validUsername = "new_user";
                 const validPassword = "123456789";
@@ -126,11 +135,10 @@
                 document.getElementById("passError").textContent = "";
                 document.getElementById("successLogin").textContent = "";
                 
-                document.querySelector("#ms-icon-done").style.right = "-30px";
-                document.querySelector("#ms-icon-user-done").style.right = "-30px";
-                
-                document.querySelector("#ms-icon-close").style.right = "-30px";
-                document.querySelector("#ms-icon-user-close").style.right = "-30px";
+                setIconStyle(iconUserDone, -30);
+                setIconStyle(iconUserError, -30);
+                setIconStyle(iconPassDone, -30);
+                setIconStyle(iconPassError, -30);
 
 
                 let usernameErrorMsg;
@@ -170,26 +178,31 @@
                 document.getElementById("passError").textContent = passwordErrorMsg;
 
                 if (!usernameErrorMsg && !passwordErrorMsg) {
-                    document.getElementById("successLogin").textContent = "Successfull login!";
-                    document.querySelector("#ms-icon-done").style.right = "10px";
-                    document.querySelector("#ms-icon-user-done").style.right = "10px";
+                    document.getElementById("successLogin").textContent = "Successful login!";
+                    setIconStyle(iconUserDone, 10);
+                    setIconStyle(iconPassDone, 10);
                 } 
 
                 if (usernameErrorMsg && passwordErrorMsg) {
-                    document.querySelector("#ms-icon-user-close").style.right = "10px";
-                    document.querySelector("#ms-icon-close").style.right = "10px";
+                    setIconStyle(iconUserError, 10);
+                    setIconStyle(iconPassError, 10); 
                 }
 
                 if (!usernameErrorMsg && passwordErrorMsg) {
-                    document.querySelector("#ms-icon-user-done").style.right = "10px";
-                    document.querySelector("#ms-icon-close").style.right = "10px";
+                    setIconStyle(iconUserDone, 10);
+                    setIconStyle(iconPassError, 10);
                 }
 
                 if (usernameErrorMsg && !passwordErrorMsg) {
-                    document.querySelector("#ms-icon-done").style.right = "10px";
-                    document.querySelector("#ms-icon-user-close").style.right = "10px";
+                    setIconStyle(iconUserError, 10);
+                    setIconStyle(iconPassDone, 10);
                 }
             }
+
+            function setIconStyle(element, rightPositionSize) {
+                element.style.right = rightPositionSize + "px";
+            }
+
         </script>
     </body>
 </html>
