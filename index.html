@@ -1,64 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Assignment 2 - Website Building</title>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment 2 - Website Building</title>
-    <style>
-        body {
-            box-sizing: border-box;
-            font-family: sans-serif;
-        }
+        <style>
+            body {
+                box-sizing: border-box;
+                font-family: sans-serif;
+            }
 
-        #login-container {
-            width: 460px;
-            margin: 0 auto;
-        }
+            #login-container {
+                width: 460px;
+                margin: 0 auto;
+            }
 
-        form label,
-        form input {
-            width: 100%;
-            box-sizing: border-box;
-        }
+            form label,
+            form input {
+                width: 100%;
+                box-sizing: border-box;
+            }
 
-        form input {
-            padding: 8px;
-        }
+            form input {
+                padding: 8px;
+            }
 
-        form label {
-            font-weight: bold;
-        }
+            form label {
+                font-weight: bold;
+            }
 
-        form div {
-            margin: 16px 0px;
-        }
-    </style>
-</head>
+            form div {
+                margin: 16px 0px;
+            }
 
-<body>
+            #ms-icon-user-close {
+                position: absolute;
+                top: 22px;
+                right: -30px;
+            }
 
-    <div id="login-container">
+            #ms-icon-user-done {
+                position: absolute;
+                top: 22px;
+                right: -30px;
+            }
 
-        <form>
-            <div>
-                <label for="username">Username:</label>
-                <input id="username" type="text">
-            </div>
+            .user-wrap {
+                display: block;
+                position: relative;
+                overflow: hidden;
+            }
 
-            <div>
-                <label for="password">Password:</label>
-                <input id="password" type="password">
-            </div>
+            #ms-icon-close {
+                position: absolute;
+                top: 22px;
+                right: -30px;
+            }
 
-            <input type="submit" value="Login">
-        </form>
+            #ms-icon-done {
+                position: absolute;
+                top: 22px;
+                right: -30px;
+            }
 
-    </div>
-    <script>
-         </script>
-    <script src="js/jquery-3.5.1.slim.min.js"></script>
+            .pass-wrap {
+                display: block;
+                position: relative;
+                overflow: hidden;
+            }
 
-</body>
+            .material-symbols-outlined {
+                font-variation-settings:
+                    'FILL' 0,
+                    'wght' 400,
+                    'GRAD' 0,
+                    'opsz' 48;
+            }
+        </style>
+    </head>
 
+    <body>
+
+        <div id="login-container">
+
+            <form>
+                <div class="user-wrap">                
+                    <span class="material-symbols-outlined" id="ms-icon-user-close">close</span>
+                    <span class="material-symbols-outlined" id="ms-icon-user-done">done</span>  
+                    <label for="username">Username:</label>
+                    <input id="username" class="usernameInputField" type="text" />
+                </div>
+
+                <div class="pass-wrap">         
+                    <span class="material-symbols-outlined" id="ms-icon-close">close</span>
+                    <span class="material-symbols-outlined" id="ms-icon-done">done</span>                       
+                    <label for="password">Password:</label>        
+                    <input id="password" type="password"/>    
+                </div>
+
+                <input type="button" value="Login" onclick="login()" />
+
+                <div id="usernameError"></div>
+                <div id="passError"></div>
+                <div id="successLogin"></div>
+            </form>
+        </div>
+
+        <script type="text/javascript">
+
+            function login() {
+
+                const validUsername = "new_user";
+                const validPassword = "123456789";
+
+                const successBorderColor = "1.8px solid rgb(23, 245, 23)";
+                const unsuccessBorderColor = "1.8px solid red";
+
+                let username = document.getElementById("username").value;
+                let password = document.getElementById("password").value;
+
+                document.getElementById("usernameError").textContent = "";
+                document.getElementById("passError").textContent = "";
+                document.getElementById("successLogin").textContent = "";
+                
+                document.querySelector("#ms-icon-done").style.right = "-30px";
+                document.querySelector("#ms-icon-user-done").style.right = "-30px";
+                
+                document.querySelector("#ms-icon-close").style.right = "-30px";
+                document.querySelector("#ms-icon-user-close").style.right = "-30px";
+
+
+                let usernameErrorMsg;
+                let passwordErrorMsg;
+            
+
+                if (!username && username.length == 0) {
+                    usernameErrorMsg = "*please, enter username";                
+                } else if (validUsername !== username.trim()) {
+                    usernameErrorMsg = "*please, enter valid username";
+                }
+
+                if (!password && password.length == 0) {
+                    passwordErrorMsg = "*please, enter password";               
+                } else if (validPassword !== password.trim()) {
+                    passwordErrorMsg = "*please, enter valid password";
+                }
+
+                let borderColor;
+                if (!usernameErrorMsg) {
+                    borderColor = successBorderColor;
+                } else {
+                    borderColor = unsuccessBorderColor;
+                }
+
+                let borderPassColor;
+                if (!passwordErrorMsg) {
+                    borderPassColor = successBorderColor;
+                } else {
+                    borderPassColor = unsuccessBorderColor;
+                }
+
+                document.getElementById("username").style.border = borderColor;
+                document.getElementById("password").style.border = borderPassColor;
+
+                document.getElementById("usernameError").textContent = usernameErrorMsg;
+                document.getElementById("passError").textContent = passwordErrorMsg;
+
+                if (!usernameErrorMsg && !passwordErrorMsg) {
+                    document.getElementById("successLogin").textContent = "Successfull login!";
+                    document.querySelector("#ms-icon-done").style.right = "10px";
+                    document.querySelector("#ms-icon-user-done").style.right = "10px";
+                } 
+
+                if (usernameErrorMsg && passwordErrorMsg) {
+                    document.querySelector("#ms-icon-user-close").style.right = "10px";
+                    document.querySelector("#ms-icon-close").style.right = "10px";
+                }
+
+                if (!usernameErrorMsg && passwordErrorMsg) {
+                    document.querySelector("#ms-icon-user-done").style.right = "10px";
+                    document.querySelector("#ms-icon-close").style.right = "10px";
+                }
+
+                if (usernameErrorMsg && !passwordErrorMsg) {
+                    document.querySelector("#ms-icon-done").style.right = "10px";
+                    document.querySelector("#ms-icon-user-close").style.right = "10px";
+                }
+            }
+        </script>
+    </body>
 </html>
